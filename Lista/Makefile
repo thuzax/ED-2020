@@ -7,7 +7,7 @@ CXXFLAGS = -Wall -Wconversion -std=c++14 -O0 -g -pg
 LDFLAGS =
 LDLIBS =
 
-OBJECTS = Lista.o ListaDupla.o Noh.o
+OBJECTS = Lista.o ListaDupla.o Noh.o main.o
 
 # first, try to compile from this project
 %.o: %.cpp %.hpp
