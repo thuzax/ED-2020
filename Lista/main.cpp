@@ -1,63 +1,70 @@
 #include <iostream>
 
 #include "Lista.hpp"
+#include "ListaDupla.hpp"
 
 using namespace std;
 
 int main() {
-    Lista l = Lista();
-    l.adicionaNoh(1);
-    l.imprimiLista();
-    l.adicionaNoh(2);
-    l.imprimiLista();
-    l.adicionaNoh(3);
-    l.imprimiLista();
-    l.adicionaNoh(5);
-    l.imprimiLista();
-    l.adicionaNoh(7);
-    l.imprimiLista();
-    l.adicionaNoh(8);
-    l.imprimiLista();
-    l.adicionaNoh(9);
-    l.imprimiLista();
+    Lista l = ListaDupla();
+    l.adiciona_no_final(1);
+    l.imprimi_lista();
+    l.adiciona_no_final(2);
+    l.imprimi_lista();
+    l.adiciona_no_final(3);
+    l.imprimi_lista();
+    l.adiciona_no_final(5);
+    l.imprimi_lista();
+    l.adiciona_no_final(7);
+    l.imprimi_lista();
+    l.adiciona_no_final(8);
+    l.imprimi_lista();
+    l.adiciona_no_final(9);
+    l.imprimi_lista();
 
-    l.setDado(6, 8);
-    l.imprimiLista();
-    l.setDado(4, 5);
-    l.imprimiLista();
+    l.set_dado(6, 8);
+    l.imprimi_lista();
+    l.set_dado(4, 5);
+    l.imprimi_lista();
+    
+    cout << endl;
+    cout << l.get_dado_por_posicao(0) << endl;
+    cout << l.get_dado_por_posicao(1) << endl;
+    cout << l.get_dado_por_posicao(6) << endl;
+    cout << endl;
 
-    l.removePorDado(8);
-    l.imprimiLista();
-    l.adicionaNoh(2);
-    l.imprimiLista();
-    l.adicionaNoh(5);
-    l.imprimiLista();
-    l.adicionaNoh(6);
-    l.imprimiLista();
-    l.adicionaNoh(5);
-    l.imprimiLista();
-    l.adicionaNoh(8);
-    l.imprimiLista();
+    l.remove_por_dado(8);
+    l.imprimi_lista();
+    l.adiciona_no_final(2);
+    l.imprimi_lista();
+    l.adiciona_no_final(5);
+    l.imprimi_lista();
+    l.adiciona_no_final(6);
+    l.imprimi_lista();
+    l.adiciona_no_final(5);
+    l.imprimi_lista();
+    l.adiciona_no_final(8);
+    l.imprimi_lista();
 
-    l.removePorDado(5);
-    l.imprimiLista();
-    l.removePorPosicao(0);
-    l.imprimiLista();
-    l.removePorPosicao(1);
-    l.imprimiLista();
-    l.removePorPosicao(3);
-    l.imprimiLista();
-    l.removePorDado(2);
-    l.imprimiLista();
-    l.removePorPosicao(0);
-    l.imprimiLista();
+    l.remove_por_dado(5);
+    l.imprimi_lista();
+    l.remove_por_posicao(0);
+    l.imprimi_lista();
+    l.remove_por_posicao(1);
+    l.imprimi_lista();
+    l.remove_por_posicao(3);
+    l.imprimi_lista();
+    l.remove_por_dado(2);
+    l.imprimi_lista();
+    l.remove_por_posicao(0);
+    l.imprimi_lista();
 
-    l.adicionaNoh(0);
-    l.imprimiLista();
-    l.adicionaNoh(1);
-    l.imprimiLista();
-    l.adicionaNoh(2);
-    l.imprimiLista();
+    l.adiciona_no_final(0);
+    l.imprimi_lista();
+    l.adiciona_no_final(1);
+    l.imprimi_lista();
+    l.adiciona_no_final(2);
+    l.imprimi_lista();
 
 
 

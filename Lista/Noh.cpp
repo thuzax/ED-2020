@@ -6,27 +6,27 @@ Noh::Noh(int dado){
     this->proximo = nullptr;
 }
 
-void Noh::setDado(int dado) {
+void Noh::set_dado(int dado) {
     this->dado = dado;
 }
 
-int Noh::getDado() {
+int Noh::get_dado() {
     return this->dado;
 }
 
-void Noh::setProximo(Noh* proximo) {
+void Noh::set_proximo(Noh* proximo) {
     this->proximo = proximo;
 }
 
-void Noh::setAnterior(Noh* anterior) {
+void Noh::set_anterior(Noh* anterior) {
     this->anterior = anterior;
 }
 
-Noh* Noh::getProximo() {
+Noh* Noh::get_proximo() {
     return this->proximo;
 }
 
-Noh* Noh::getAnterior() {
+Noh* Noh::get_anterior() {
     return this->anterior;
 }
 

@@ -1,6 +1,9 @@
 // Noh de uma lista (ou árvore)
 
 
+#ifndef NOH_HPP
+#define NOH_HPP 1
+
 using namespace std;
 
 class Noh {
@@ -11,10 +14,12 @@ class Noh {
     
     public:
         Noh(int dado);
-        void setDado(int dado);
-        int getDado();
-        void setProximo(Noh* proximo);
-        void setAnterior(Noh* anterior);
-        Noh* getProximo();
-        Noh* getAnterior();        
+        void set_dado(int dado);
+        int get_dado();
+        void set_proximo(Noh* proximo);
+        void set_anterior(Noh* anterior);
+        Noh* get_proximo();
+        Noh* get_anterior();        
 };
+
+#endif
