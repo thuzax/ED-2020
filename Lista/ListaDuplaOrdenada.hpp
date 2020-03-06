@@ -20,6 +20,8 @@ class ListaDuplaOrdenada : public ListaOrdenada {
         virtual bool verifica_ordem_anterior(Noh* noh, Noh* anterior);
     
     public:
+        ListaDuplaOrdenada(bool crescente = true);
+
         virtual void adiciona(int dado);
         
         virtual void set_dado(int posicao, int dado);

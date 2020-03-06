@@ -2,6 +2,9 @@
 #include "ListaDuplaOrdenada.hpp"
 
 
+ListaDuplaOrdenada::ListaDuplaOrdenada(bool crescente) 
+                        : ListaOrdenada(crescente){}
+
 bool ListaDuplaOrdenada::verifica_ordem_proximo(Noh* noh, Noh* proximo) {
     if (proximo == nullptr) {
         return true;
@@ -102,9 +105,6 @@ void ListaDuplaOrdenada::adiciona(int dado) {
         this->tamanho++;
         return;
     }
-
-    Noh* noh_ini = this->inicio; 
-    Noh* noh_fim = this->fim; 
 
     this->aloca_entre_nohs(novo, this->inicio, this->fim);
     this->tamanho++;

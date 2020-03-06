@@ -214,7 +214,7 @@ void teste_lista_ordenada(ListaOrdenada* l) {
 // }
 
 void teste_lista_dupla_ordenada() {
-    ListaOrdenada* l = new ListaDuplaOrdenada();
+    ListaOrdenada* l = new ListaDuplaOrdenada(false);
     teste_lista_ordenada(l);
     delete l;
 }
