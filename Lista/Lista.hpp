@@ -9,9 +9,6 @@
 using namespace std;
 
 class Lista {
-    private:
-        void remove_noh(Noh* noh, Noh* anterior);
-
     protected:
         Noh* inicio;
         Noh* fim;
@@ -22,19 +19,15 @@ class Lista {
 
     public:
         Lista();
-        ~Lista();
+        virtual ~Lista();
 
-        void adiciona_no_inicio(int dado);
-        void adiciona_no_final(int dado);
-        void adiciona_na_posicao(int posicao, int dado);
+        virtual void set_dado(int posicao, int dado) = 0;
+
+        virtual void remove_por_posicao(int posicao) = 0;
+        virtual void remove_por_dado(int dado) = 0;
         
-        void set_dado(int posicao, int dado);
-        
-        void remove_por_posicao(int posicao);
-        void remove_por_dado(int dado);
-        
-        int get_dado_por_posicao(int posicao);
-        void imprimi_lista(); 
+        virtual int get_dado_por_posicao(int posicao) = 0;
+        void imprime_lista(); 
 
 };
 

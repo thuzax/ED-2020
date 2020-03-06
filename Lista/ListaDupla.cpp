@@ -2,6 +2,25 @@
 #include <iostream>
 #include "ListaDupla.hpp"
 
+void ListaDupla::remove_noh(Noh* noh) {
+    if (noh->get_anterior() == nullptr) {
+        this->inicio = noh->get_proximo();
+    }
+    else {
+        noh->get_anterior()->set_proximo(noh->get_proximo());
+    }
+
+    if (noh->get_proximo() == nullptr) {
+        this->fim = noh->get_anterior();
+    }
+    else {
+        noh->get_proximo()->set_anterior(noh->get_anterior());
+    }
+
+    delete noh;
+    this->tamanho--;
+}
+
 
 void ListaDupla::adiciona_no_inicio(int dado) {
     Noh* novo = new Noh(dado);
@@ -41,24 +60,6 @@ void ListaDupla::adiciona_na_posicao(int posicao, int dado) {
     // arruma os ponteiros (verificando inicio e fim)
 }
 
-void ListaDupla::remove_noh(Noh* noh) {
-    if (noh->get_anterior() == nullptr) {
-        this->inicio = noh->get_proximo();
-    }
-    else {
-        noh->get_anterior()->set_proximo(noh->get_proximo());
-    }
-
-    if (noh->get_proximo() == nullptr) {
-        this->fim = noh->get_anterior();
-    }
-    else {
-        noh->get_proximo()->set_anterior(noh->get_anterior());
-    }
-
-    delete noh;
-    this->tamanho--;
-}
 
 void ListaDupla::set_dado(int posicao, int dado) {
     if (not this->posicao_valida(posicao)) {
@@ -98,8 +99,8 @@ void ListaDupla::remove_por_posicao(int posicao) {
     Noh* noh_fim = this->fim;
 
     int posicao_fim = this->tamanho - posicao - 1;
-    bool comecar_do_fim = (posicao_fim > 0);
-
+    bool comecar_do_fim = (posicao_fim < posicao);
+    
     while (posicao > 0 and posicao_fim > posicao) {
         posicao--;
         posicao_fim--;
@@ -121,6 +122,7 @@ void ListaDupla::remove_por_dado(int dado) {
         return;
     }
 
+
     Noh* noh_ini = this->inicio;
     Noh* noh_fim = this->fim;
 
@@ -134,6 +136,8 @@ void ListaDupla::remove_por_dado(int dado) {
         if (posicao_ini != posicao_fim and noh_fim->get_dado() == dado) {
             this->remove_noh(noh_fim);
         }
+        noh_ini = noh_ini->get_proximo();
+        noh_fim = noh_fim->get_anterior();
         posicao_ini++;
         posicao_fim--;
     }

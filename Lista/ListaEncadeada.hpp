@@ -1,16 +1,17 @@
-// Lista duplamente encadeada
+// Lista
 
-#ifndef LISTA_DUPLA_HPP
-#define LISTA_DUPLA_HPP 1
+#ifndef LISTA_ENCADEADA_HPP
+#define LISTA_ENCADEADA_HPP 1
+
 
 #include "Noh.hpp"
-#include "ListaEncadeada.hpp"
+#include "Lista.hpp"
 
 using namespace std;
 
-class ListaDupla : public ListaEncadeada {
-    protected:
-        void remove_noh(Noh* noh);
+class ListaEncadeada : public Lista {
+    private:
+        void remove_noh(Noh* noh, Noh* anterior);
 
     public:
         virtual void adiciona_no_inicio(int dado);
@@ -23,6 +24,7 @@ class ListaDupla : public ListaEncadeada {
         virtual void remove_por_dado(int dado);
 
         virtual int get_dado_por_posicao(int posicao);
+
 };
 
 #endif
