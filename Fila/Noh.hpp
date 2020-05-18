@@ -8,6 +8,7 @@ using namespace std;
 
 class Noh {
     private:
+        int id;
         int dado;
         Noh* proximo;
 
