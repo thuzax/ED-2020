@@ -1,10 +1,13 @@
-
+// Graph Adjacency Matrix
 
 #include <iostream>
 #include <string>
 using namespace std;
 
 #include "Vertex.hpp"
+
+#ifndef ADJ_MATRIX
+#define ADJ_MATRIX 1
 
 class AdjacencyMatrix {
     private:
@@ -21,3 +24,5 @@ class AdjacencyMatrix {
         
         string get_string();
 };
+
+#endif

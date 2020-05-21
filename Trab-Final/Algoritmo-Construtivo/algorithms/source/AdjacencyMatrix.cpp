@@ -18,6 +18,7 @@ AdjacencyMatrix::AdjacencyMatrix(int matrix_size) {
     }
 }
 
+
 AdjacencyMatrix::~AdjacencyMatrix() {
     // destruct matrix
     for (int i = 0; i < this->matrix_size; i++) {
@@ -30,6 +31,7 @@ AdjacencyMatrix::~AdjacencyMatrix() {
 void AdjacencyMatrix::set_weight(int id_v1, int id_v2, double weight) {
     this->matrix[id_v1][id_v2] = weight;
 }
+
 
 double AdjacencyMatrix::get_weight(int id_v1, int id_v2) {
     return this->matrix[id_v1][id_v2];

@@ -5,6 +5,9 @@ using namespace std;
 
 #include "Vertex.hpp"
 
+#ifndef DISTRICT
+#define DISTRICT 1
+
 class District {
     private:
         int id;
@@ -15,3 +18,5 @@ class District {
 
         string get_string();
 };
+
+#endif
