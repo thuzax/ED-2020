@@ -4,7 +4,6 @@
 #include <string>
 using namespace std;
 
-#include "Vertex.hpp"
 
 #ifndef ADJ_MATRIX
 #define ADJ_MATRIX 1
@@ -21,7 +20,10 @@ class AdjacencyMatrix {
         void set_weight(int id_v1, int id_v2, double weight);
         
         double get_weight(int id_v1, int id_v2);
-        
+
+        bool are_neighbors(int id_v1, int id_v2);
+
+
         string get_string();
 };
 

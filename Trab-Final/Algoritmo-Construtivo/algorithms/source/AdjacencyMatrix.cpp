@@ -2,7 +2,7 @@
 
 #include "../AdjacencyMatrix.hpp"
 
-
+// Initialize matrix values
 AdjacencyMatrix::AdjacencyMatrix(int matrix_size) {
     this->matrix_size = matrix_size;
 
@@ -18,7 +18,7 @@ AdjacencyMatrix::AdjacencyMatrix(int matrix_size) {
     }
 }
 
-
+// Destruct Matrix
 AdjacencyMatrix::~AdjacencyMatrix() {
     // destruct matrix
     for (int i = 0; i < this->matrix_size; i++) {
@@ -27,17 +27,25 @@ AdjacencyMatrix::~AdjacencyMatrix() {
     delete[] matrix;
 }
 
-
+// Set the edge weight --> if weight is != the vertices are neighbors
 void AdjacencyMatrix::set_weight(int id_v1, int id_v2, double weight) {
     this->matrix[id_v1][id_v2] = weight;
 }
 
-
+// Get the weight of the edge
 double AdjacencyMatrix::get_weight(int id_v1, int id_v2) {
     return this->matrix[id_v1][id_v2];
 }
 
+// Verify if two vertices are neighbors
+bool AdjacencyMatrix::are_neighbors(int id_v1, int id_v2) {
+    if (this->matrix[id_v1][id_v2] == 0) {
+        return false;
+    }
+    return true;
+}
 
+// Return the adjacency matrix as string
 string AdjacencyMatrix::get_string() {
     string text = "";
     text += "Matrix: \n";
@@ -52,3 +60,4 @@ string AdjacencyMatrix::get_string() {
     
     return text;
 }
+

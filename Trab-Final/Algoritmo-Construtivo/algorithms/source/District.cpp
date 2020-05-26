@@ -5,9 +5,11 @@ District::District(int id) {
     this->id = id;
 }
 
+
 int District::get_id() {
     return this->id;
 }
+
 
 string District::get_string() {
     string text = "";
@@ -16,3 +18,4 @@ string District::get_string() {
     return text;
 
 }
+

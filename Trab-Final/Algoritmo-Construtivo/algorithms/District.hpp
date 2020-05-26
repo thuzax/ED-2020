@@ -3,7 +3,6 @@
 #include <string>
 using namespace std;
 
-#include "Vertex.hpp"
 
 #ifndef DISTRICT
 #define DISTRICT 1

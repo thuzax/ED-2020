@@ -5,6 +5,7 @@ Vertex::Vertex(int id, double coordenate_x, double coordenate_y) {
     this->id = id;
     this->coordenate_x = coordenate_x;
     this->coordenate_y = coordenate_y;
+    this->id_district = -1;
 }
 
 void Vertex::set_id_district(int id_district) {

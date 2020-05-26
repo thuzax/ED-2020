@@ -7,7 +7,8 @@ CXXFLAGS = -Wall -Wconversion -std=c++14 -O0 -g -pg
 LDFLAGS =
 LDLIBS =
 
-OBJECTS = constr-distr.o Vertex.o District.o AdjacencyMatrix.o AdjacencyList.o
+OBJECTS = constr-distr.o Vertex.o District.o AdjacencyMatrix.o AdjacencyList.o \
+          Graph.o file_manager.o math_calc.o
 
 # first, try to compile from this project
 %.o: %.cpp %.hpp

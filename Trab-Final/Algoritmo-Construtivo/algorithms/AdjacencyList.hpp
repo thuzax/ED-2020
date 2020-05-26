@@ -5,10 +5,9 @@
 #include <vector>
 using namespace std;
 
-#include "Vertex.hpp"
-
 #ifndef ADJ_LIST
 #define ADJ_LIST 1
+
 
 class Node {
     private:
@@ -30,7 +29,7 @@ class AdjacencyList {
         Node* nodes;
 
     public:
-        AdjacencyList(int* vertices, int num_vertices);
+        AdjacencyList(int num_vertices);
         ~AdjacencyList();
 
         void add_neighbor(int id_v1, int id_v2);
