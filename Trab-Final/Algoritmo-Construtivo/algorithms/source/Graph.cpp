@@ -52,6 +52,26 @@ bool Graph::are_neighbors(int id_v1, int id_v2) {
     return adj_matrix->are_neighbors(id_v1, id_v2);
 }
 
+// Get the weight in adj matrix
+double Graph::get_distance(int id_v1, int id_v2) {
+    return this->adj_matrix->get_weight(id_v1, id_v2);
+}
+
+// Return the coord x from vertex with the input id
+double Graph::get_coordenate_x(int id_vertex) {
+    return this->vertices[id_vertex]->get_coordinate_x();
+}
+
+// Return the coord y from vertex with the input id
+double Graph::get_coordenate_y(int id_vertex) {
+    return this->vertices[id_vertex]->get_coordinate_y();
+}
+
+// Return the number of vertices in graph
+int Graph::get_num_vertices() {
+    return this->num_vertices;
+}
+
 // Get the structures as strings
 string Graph::get_string() {
     string text = "";

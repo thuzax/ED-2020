@@ -8,7 +8,7 @@ LDFLAGS =
 LDLIBS =
 
 OBJECTS = constr-distr.o Vertex.o District.o AdjacencyMatrix.o AdjacencyList.o \
-          Graph.o file_manager.o math_calc.o
+          Graph.o file_manager.o common_functions.o constructive_algorithm.o
 
 # first, try to compile from this project
 %.o: %.cpp %.hpp

@@ -30,7 +30,11 @@ class Graph {
 
         bool are_neighbors(int id_v1, int id_v2);
 
-
+        
+        double get_distance(int id_v1, int id_v2);
+        double get_coordenate_x(int id_vertex);
+        double get_coordenate_y(int id_vertex);
+        int get_num_vertices();
         string get_string();
 
         // Verification functions
