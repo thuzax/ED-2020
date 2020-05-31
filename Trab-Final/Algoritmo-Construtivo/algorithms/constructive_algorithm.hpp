@@ -5,6 +5,7 @@
 #include <vector>
 #include <math.h>
 
+#include "graph_common_functions.hpp"
 #include "common_functions.hpp"
 
 #include "Graph.hpp"

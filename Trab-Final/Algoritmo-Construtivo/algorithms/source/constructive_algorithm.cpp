@@ -17,6 +17,16 @@ void construct_districts(Graph* graph, int num_districts,
     }
     cout << endl;
 
+    for (int i = 0; i < num_districts; i++) {
+        assign_vertex_to_district(districts_seeds[i], districts[i], graph);
+    }
+
+    for (int i = 0; i < num_districts; i++) {
+        cout << districts[i]->get_string() << endl;
+    }
+
+    cout << graph->get_vertices_string() << endl;
+
 }
 
 // select random seeds between a random pool

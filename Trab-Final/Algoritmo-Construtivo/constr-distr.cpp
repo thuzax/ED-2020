@@ -16,15 +16,16 @@ using namespace std;
 void initialize_random(int seed = -1) {
     // random seed
     if (seed == -1) {
-        srand(time(0));
+        srand(time(nullptr));
         return;
     }
     // fixed seed
-    srand(0);
+    srand(seed);
 }
 
 
 int main() {
+    initialize_random();
     Graph* graph = new Graph();
 
     int num_districts;

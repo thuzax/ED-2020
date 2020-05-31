@@ -37,6 +37,11 @@ void Graph::set_vertices(Vertex** vertices) {
     this->vertices = vertices;
 }
 
+// Set vertex as a border
+void Graph::set_vertex_num_neighbors_out(int id_vertex, int num_neighbors) {
+    this->vertices[id_vertex]->set_vertex_num_neighbors_out(num_neighbors);
+}
+
 // Add v1 as neighbor of v2 and v2 as neighbor of v1
 void Graph::add_neighborhood(int id_v1, int id_v2, double distance) {
     this->adj_list->add_neighbor(id_v1, id_v2);
@@ -50,6 +55,76 @@ void Graph::add_neighborhood(int id_v1, int id_v2, double distance) {
 // Verify if two vertices are neighbors
 bool Graph::are_neighbors(int id_v1, int id_v2) {
     return adj_matrix->are_neighbors(id_v1, id_v2);
+}
+
+vector<int> Graph::get_candidates(int id_vertex) {
+    vector<int> candidates;
+    vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
+    
+    Vertex* vertex = this->vertices[id_vertex];
+    for (int i = 0; i < neighbors.size(); i++) {
+        Vertex* neighbor = this->vertices[neighbors[i]];
+        if (vertex->get_id_district() != neighbor->get_id_district()) {
+            candidates.push_back(neighbors[i]);
+        }
+    }
+
+    return candidates;
+}
+
+
+// Neighbors of same district will have the number of vertices out of the district increased
+void Graph::add_to_neighbors_out_count(int id_vertex) {
+    vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
+    
+    Vertex* vertex = this->vertices[id_vertex];
+    for (int i = 0; i < neighbors.size(); i++) {
+        Vertex* neighbor = this->vertices[neighbors[i]];
+        if (vertex->get_id_district() == neighbor->get_id_district()) {
+            neighbor->increase_num_neighbors_out_district();
+        }
+    }
+}
+
+
+void Graph::remove_from_neighbors_out_count(int id_vertex) {
+    vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
+    
+    Vertex* vertex = this->vertices[id_vertex];
+    for (int i = 0; i < neighbors.size(); i++) {
+        Vertex* neighbor = this->vertices[neighbors[i]];
+        if (vertex->get_id_district() == neighbor->get_id_district()) {
+            neighbor->decrease_num_neighbors_out_district();
+        }
+    }
+}
+
+
+// Verify if a vertex has a neighbor which isn't from the same district
+int Graph::get_num_neihgbors_out_of_district(int id_vertex) {
+    vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
+
+    Vertex* vertex = this->vertices[id_vertex];
+
+    int num_neighbors = 0;
+
+    for (int i = 0; i < neighbors.size(); i++) {
+        Vertex* neighbor = this->vertices[neighbors[i]];
+        if (vertex->get_id_district() != neighbor->get_id_district()) {
+            num_neighbors++;
+        }
+    }
+    return num_neighbors;
+}
+
+
+// Set the id of the district in the vertex
+void Graph::set_vertex_district_id(int id_vertex, int id_district) {
+    Vertex* vertex = this->vertices[id_vertex];
+    if (vertex->get_id_district() != -1) {
+        this->add_to_neighbors_out_count(id_vertex);
+    }
+    this->vertices[id_vertex]->set_id_district(id_district);
 }
 
 // Get the weight in adj matrix
@@ -79,6 +154,17 @@ string Graph::get_string() {
     text += this->adj_list->get_string() + "\n";
     text += "--------------- Adj Matri -------------------\n";
     text += this->adj_matrix->get_string() + "\n";
+
+    return text;
+
+}
+
+
+string Graph::get_vertices_string() {
+    string text = "";
+    for (int i = 0; i < num_vertices; i++) {
+        text += this->vertices[i]->get_string() + "\n";
+    }
 
     return text;
 

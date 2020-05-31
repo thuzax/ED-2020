@@ -8,8 +8,6 @@ void read_rm_based(const char* file_name, Graph* graph, int* num_districts) {
     int num_vertices;
     rm_file >> num_vertices;
 
-    cout << "AQUI" << endl;
-
     Vertex** vertices = new Vertex*[num_vertices];
 
     for (int i = 0; i < num_vertices; i++) {
