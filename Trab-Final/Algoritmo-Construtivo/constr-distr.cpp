@@ -39,6 +39,16 @@ int main() {
     }
 
     District** districts = new District*[num_districts];
+    
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
+    // TODO: função obj + recompute balance
     construct_districts(graph, districts, num_districts);
 
 
