@@ -57,6 +57,19 @@ bool Graph::are_neighbors(int id_v1, int id_v2) {
     return adj_matrix->are_neighbors(id_v1, id_v2);
 }
 
+bool Graph::are_from_same_district(int id_v1, int id_v2) {
+    Vertex* v1 = this->vertices[id_v1];
+    Vertex* v2 = this->vertices[id_v2];
+
+    if (v1->get_id_district() == v2->get_id_district()) {
+        return true;
+    }
+
+    return false;
+
+}
+
+
 vector<int> Graph::get_candidates(int id_vertex) {
     vector<int> candidates;
     vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
@@ -70,6 +83,13 @@ vector<int> Graph::get_candidates(int id_vertex) {
     }
 
     return candidates;
+}
+
+bool Graph::vertex_has_district(int id_vertex) {
+    if (this->vertices[id_vertex]->get_id_district() != -1) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -159,6 +179,12 @@ string Graph::get_string() {
 
 }
 
+string Graph::get_vertex_string(int id_vertex) {
+    string text = "";
+    text += this->vertices[id_vertex]->get_string() + "\n";
+    return text;
+
+}
 
 string Graph::get_vertices_string() {
     string text = "";
@@ -212,6 +238,74 @@ bool Graph::is_connected() {
             discovered[v] = true;
             vector<int> neighbors = this->adj_list->get_neighbors(v);
             stack.insert(stack.end(), neighbors.begin(), neighbors.end());
+
+        }
+
+    }
+
+    delete[] discovered;
+
+    // se count == 1, grafo é conexo, se count == 2, conjunto V == {}
+    if (count < 2) {
+        return true;
+    }
+    // caso contrário é um grafo desconexo
+    return false;
+
+}
+
+bool Graph::is_connected(int id_district) {
+    // discovered vertices
+    bool* discovered = new bool[this->num_vertices];
+    for (int i = 0; i < this->num_vertices; i++) {
+        discovered[i] = false;
+    }
+    // number of subgraphs
+    int count = 0;
+    
+
+    for (int i = 0; i < this->num_vertices; i++) {
+        // if discovered, means that it is in a previous subgraph
+        if (discovered[i]) {
+            continue;
+        }
+        if (id_district != this->vertices[i]->get_id_district()) {
+            continue;
+        }
+
+        
+        // otherwise it is the first discovered vertex of a subgraph
+        count += 1;
+
+        // vertex stack
+        vector<int> stack;
+        
+        // add vertex to stack
+        stack.push_back(i);
+
+        // while stack is not empty
+        while (stack.size() > 0) {
+            int v = stack.back();
+            stack.pop_back();
+
+            // if vertex already discovered, search next one
+            if (discovered[v]) {
+                continue;
+            }
+            if (id_district != this->vertices[i]->get_id_district()) {
+                continue;
+            }
+
+            // otherwise, mark and add neighbors to search
+            discovered[v] = true;
+            vector<int> neighbors = this->adj_list->get_neighbors(v);
+            for (int i = 0; i < neighbors.size(); i++) {
+                if (discovered[neighbors[i]]) {
+                    continue;
+                }
+                stack.push_back(neighbors[i]);
+            }
+            
 
         }
 

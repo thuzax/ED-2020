@@ -3,8 +3,8 @@
 #include "../constructive_algorithm.hpp"
 
 
-void construct_districts(Graph* graph, int num_districts, 
-                                                District** districts) {
+void construct_districts(Graph* graph, District** districts, 
+                                                int num_districts) {
 
     for (int i = 0; i < num_districts; i++) {
         districts[i] = new District(i);
@@ -13,21 +13,33 @@ void construct_districts(Graph* graph, int num_districts,
     vector<int> districts_seeds = select_districts_seeds(graph, num_districts);
 
     for (int i = 0; i < num_districts; i++) {
-        cout << districts_seeds[i] << " ";
-    }
-    cout << endl;
-
-    for (int i = 0; i < num_districts; i++) {
         assign_vertex_to_district(districts_seeds[i], districts[i], graph);
     }
 
-    for (int i = 0; i < num_districts; i++) {
-        cout << districts[i]->get_string() << endl;
-    }
-
-    cout << graph->get_vertices_string() << endl;
+    expand_districts(graph, districts, num_districts);
 
 }
+
+void expand_districts(Graph* graph, District** districts, int num_districts) {
+    Heap heap(num_districts);
+    for (int i = 0; i < num_districts; i++) {
+        heap.add(i, districts[i]->get_balance());
+    }
+
+    while (not heap.heap_is_empty()) {
+        int id_district = heap.remove();
+        District* district = districts[id_district];
+
+        if (district->has_candidate()) {
+            int candidate_id = remove_best_candidate_id(district, graph);
+            if (candidate_id != -1) {
+                assign_vertex_to_district(candidate_id, district, graph);
+                heap.add(district->get_id(), district->get_balance());
+            }
+        }
+    }
+}
+
 
 // select random seeds between a random pool
 vector<int> select_districts_seeds(Graph* graph, int num_districts) {

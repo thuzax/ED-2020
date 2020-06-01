@@ -9,7 +9,7 @@ LDLIBS =
 
 OBJECTS = constr-distr.o Vertex.o District.o AdjacencyMatrix.o AdjacencyList.o \
           Graph.o file_manager.o common_functions.o constructive_algorithm.o   \
-		  graph_common_functions.o
+		  graph_common_functions.o Heap.o
 
 # first, try to compile from this project
 %.o: %.cpp %.hpp

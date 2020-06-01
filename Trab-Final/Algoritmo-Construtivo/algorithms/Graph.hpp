@@ -8,6 +8,8 @@ using namespace std;
 #include "AdjacencyMatrix.hpp"
 #include "Vertex.hpp"
 
+#include "common_functions.hpp"
+
 #ifndef GRAPH
 #define GRAPH 1
 
@@ -31,6 +33,9 @@ class Graph {
         void add_neighborhood(int id_v1, int id_v2, double distance);
 
         bool are_neighbors(int id_v1, int id_v2);
+        bool are_from_same_district(int id_v1, int id_v2);
+        bool vertex_has_district(int id_vertex);
+
 
         vector<int> get_candidates(int id_vertex);
         void add_to_neighbors_out_count(int id_vertex);
@@ -43,10 +48,13 @@ class Graph {
         int get_num_vertices();
         
         string get_string();
+        string get_vertex_string(int id_vertex);
         string get_vertices_string();
+
 
         // Verification functions
         bool is_connected();
+        bool is_connected(int id_district);
 
 };
 

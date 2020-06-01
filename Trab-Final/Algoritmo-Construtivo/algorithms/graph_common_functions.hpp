@@ -24,4 +24,8 @@ int get_nearest_vertex_id(int district_seeds, vector<int> candidates,
 
 void assign_vertex_to_district(int id_vertex, District* district, Graph* graph);
 
+double recalculate_district_balance(District* district, Graph* graph);
+
+int remove_best_candidate_id(District* district, Graph* graph);
+
 #endif

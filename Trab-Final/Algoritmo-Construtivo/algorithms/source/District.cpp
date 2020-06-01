@@ -3,6 +3,22 @@
 
 District::District(int id) {
     this->id = id;
+    this->balance_value = 0;
+    this->num_vertices = 0;
+}
+
+
+void District::set_balance_value(double bal_val) {
+    this->balance_value = bal_val;
+}
+
+void District::increase_num_vertices() {
+    this->num_vertices++;
+}
+
+
+void District::decrease_num_vertices() {
+    this->num_vertices--;
 }
 
 
@@ -40,6 +56,13 @@ void District::remove_from_border(int id_vertex) {
 // Verify if a vertex is a candidate to enter in the district
 bool District::is_candidate_of_district(int id_vertex) {
     if (is_in_vector(id_vertex, this->candidates)) {
+        return true;
+    }
+    return false;
+}
+
+bool District::has_candidate() {
+    if (this->candidates.size() > 0) {
         return true;
     }
     return false;
@@ -85,6 +108,23 @@ void District::remove_from_candidates(int id_vertex) {
 // Get the id of the district
 int District::get_id() {
     return this->id;
+}
+
+double District::get_balance() {
+    return this->balance_value;
+}
+
+
+int District::get_num_vertices() {
+    return this->num_vertices;
+}
+
+vector<int> District::get_candidates() {
+    return this->candidates;
+}
+
+vector<int> District::get_border() {
+    return this->border;
 }
 
 

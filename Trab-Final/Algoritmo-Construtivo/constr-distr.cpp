@@ -39,8 +39,17 @@ int main() {
     }
 
     District** districts = new District*[num_districts];
-    construct_districts(graph, num_districts, districts);
+    construct_districts(graph, districts, num_districts);
 
+
+    cout << "---------------------------------------------------------" << endl;
+    cout << graph->get_vertices_string() << endl;
+
+    for (int i = 0; i < num_districts; i++) {
+        cout << graph->is_connected(i) << " " << districts[i]->get_balance();
+        cout << endl;
+    }
+    cout << endl;
 
     for (int i = 0; i < num_districts; i++) {
         delete districts[i];

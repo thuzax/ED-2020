@@ -53,3 +53,10 @@ int is_in_vector(int id, vector<int> vec) {
     return true;
 }
 
+string get_vector_string(vector<int> vec) {
+    string text = "";
+    for (int i = 0; i < vec.size(); i++) {
+        text += to_string(vec[i]) + " ";
+    }
+    return text;
+}

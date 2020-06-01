@@ -20,5 +20,7 @@ int find_position_in_vector(int id, vector<int> vec);
 
 int is_in_vector(int id, vector<int> vec);
 
+string get_vector_string(vector<int> vec);
+
 
 #endif

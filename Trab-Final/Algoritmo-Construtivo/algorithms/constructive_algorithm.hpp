@@ -10,6 +10,7 @@
 
 #include "Graph.hpp"
 #include "District.hpp"
+#include "Heap.hpp"
 
 using namespace std;
 
@@ -17,8 +18,11 @@ using namespace std;
 #define CONSTR_ALG 1
 
 
-void construct_districts(Graph* graph, int num_districts, District** districts);
- 
+void construct_districts(Graph* graph, District** districts, int num_districts);
+
+void expand_districts(Graph* graph, District** districts, int num_districts); 
+
+
 vector<int> select_districts_seeds(Graph* graph, int num_districts);
 
 #endif
