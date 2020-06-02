@@ -1,4 +1,3 @@
-// Lista encadeada sem ponteiro cauda
 
 #include <iostream>
 #include <string>

@@ -17,7 +17,7 @@ FilaSemCauda::~FilaSemCauda() {
 
 int FilaSemCauda::remove_inicio() {
     if (this->inicio == nullptr) {
-        cerr << "PILHA VAZIA" << endl;
+        cerr << "FILA VAZIA" << endl;
         exit(1);
     }
     Elemento* elemento = this->inicio;
