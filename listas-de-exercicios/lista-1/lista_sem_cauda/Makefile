@@ -2,12 +2,12 @@
 # (C) Bruno de Oliveira Schneider - May 2014
 
 
-APPLICATION = heap.app
+APPLICATION = main.app
 CXXFLAGS = -Wall -Wconversion -std=c++14 -O0 -g -pg
 LDFLAGS =
 LDLIBS =
 
-OBJECTS = Heap.o main.o
+OBJECTS = ListaSemCauda.o
 
 # first, try to compile from this project
 %.o: %.cpp %.hpp

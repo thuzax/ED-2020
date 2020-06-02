@@ -1,112 +1,177 @@
 
 #include "Heap.hpp"
 
-Heap::Heap(int tamanho_maximo, bool crescente) {
-    this->contador_id = 0;
 
-    this->tamanho_maximo = tamanho_maximo;
-    this->crescente = crescente;
+// ---------------------------------Node functions------------------------------
+Node::Node(int id, double weight) {
+    this->id = id;
+    this->weight = weight;
+}
 
-    this->vetor = new Noh*[this->tamanho_maximo];
-    this->tamanho = 0;
+void Node::set_id(int id) {
+    this->id = id;
+}
+
+void Node::set_weight(double weight) {
+    this->weight = weight;
+}
+
+int Node::get_id() {
+    return this->id;
+}
+
+double Node::get_weight() {
+    return this->weight;
+}
+
+//-------------------------------Heap functions---------------------------------
+
+Heap::Heap(int max_size, bool ascending) {
+    this->max_size = max_size;
+    this->ascending = ascending;
+
+    this->nodes = new Node*[this->max_size];
+    this->size = 0;
 
 }
 
 Heap::~Heap() {
-    for (int i = 0; i < tamanho; i++) {
-        delete this->vetor[i];
+    for (int i = 0; i < size; i++) {
+        delete this->nodes[i];
     }
-    delete[] this->vetor;
+    delete[] this->nodes;
 }
 
-bool Heap::verifica_ordem_anterior(Noh* noh, Noh* anterior) {
-    if (this->crescente) {
-        return (noh->get_dado() >= anterior->get_dado());
+bool Heap::verify_previous(Node* node, Node* previous) {
+    if (this->ascending) {
+        return (node->get_weight() >= previous->get_weight());
     }
     else {
-        return (noh->get_dado() <= anterior->get_dado());
+        return (node->get_weight() <= previous->get_weight());
     }
 }
 
-bool Heap::verifica_ordem_proxima(Noh* noh, Noh* proximo) {
-    if (this->crescente) {
-        return (noh->get_dado() >= proximo->get_dado());
+bool Heap::verify_next(Node* node, Node* next) {
+    if (this->ascending) {
+        return (node->get_weight() >= next->get_weight());
     }
     else {
-        return (noh->get_dado() <= proximo->get_dado());
+        return (node->get_weight() <= next->get_weight());
     }
 }
 
-bool Heap::heap_vazia() {
-    if (this->tamanho == 0) {
+bool Heap::heap_is_empty() {
+    if (this->size == 0) {
         return true;
     }
 
     return false;
 }
 
-bool Heap::heap_cheia() {
-    if (this->tamanho >= tamanho_maximo) {
+bool Heap::heap_is_full() {
+    if (this->size >= max_size) {
         return true;
     }
 
     return false;
 }
 
-int Heap::pos_pai(int pos_filho) {
-    return ((pos_filho - 1) / 2);
+int Heap::father_pos(int child_pos) {
+    return ((child_pos - 1) / 2);
 }
 
-int Heap::pos_direita(int pos_pai) {
-    return (2 * pos_pai + 2);
+int Heap::left_pos(int father_pos) {
+    return (2 * father_pos + 2);
 }
 
-int Heap::pos_esquerda(int pos_pai) {
-    return (2* pos_pai + 1);
+int Heap::right_pos(int father_pos) {
+    return (2* father_pos + 1);
 }
 
-void Heap::corrige_subindo(int pos) {
-    Noh* noh = this->vetor[pos];
-    int p_pai = this->pos_pai(pos);
-    Noh* pai = this->vetor[p_pai];
-    if (not verifica_ordem_anterior(noh, pai)) {
-        this->vetor[p_pai] = noh;
-        this->vetor[pos] = pai;
-        return corrige_subindo(p_pai);
+void Heap::correct_climbing(int pos) {
+    Node* node = this->nodes[pos];
+    int p_father = this->father_pos(pos);
+    Node* father = this->nodes[p_father];
+    if (not verify_previous(node, father)) {
+        this->nodes[p_father] = node;
+        this->nodes[pos] = father;
+        return correct_climbing(p_father);
     }
 
     return;
 }
 
-void Heap::adiciona(int dado) {
-    if (this->heap_cheia()) {
+void Heap::add(int id, double weight) {
+    if (this->heap_is_full()) {
         cout << "Heap cheia" << endl;
         return;
     }
     
-    Noh* novo = new Noh(dado);
-    this->vetor[this->tamanho] = novo;
-    this->tamanho++;
+    Node* novo = new Node(id, weight);
+    this->nodes[this->size] = novo;
+    this->size++;
 
-    corrige_subindo(this->tamanho-1);
+    correct_climbing(this->size-1);
 
 }
 
-void Heap::set_dado(int id, int dado) {
+void Heap::correct_descending(int pos) {
+    Node* father = this->nodes[pos];
+    int left_pos = this->left_pos(pos);
+    Node* left = nullptr;
+    if (left_pos < this->size) {
+        left = this->nodes[left_pos];
+    }
 
+
+    int right_pos = this->right_pos(pos);
+    Node* right = nullptr;
+    if (right_pos < this->size) {
+        right = this->nodes[right_pos];
+    }
+
+
+    int child_pos = left_pos;
+    if (left == nullptr or this->verify_previous(left, right)) {
+        child_pos = right_pos;
+    }
+
+    Node* child = nullptr;
+    if (child_pos < this->size){
+        child = this->nodes[child_pos];
+    }
+
+    if (child == nullptr or this->verify_previous(child, father)) {
+        return;
+    }
+
+    this->nodes[pos] = child;
+    this->nodes[child_pos] = father;
+    this->correct_descending(child_pos);
 }
 
 int Heap::remove() {
-    return 0;
-}
-
-void Heap::imprime() {
-    for(int i = 0; i < this->tamanho; i++) {
-        cout << this->vetor[i]->get_dado() << " ";
+    if (this->size < 1) {
+        cout << "ERRO" << endl;
+        return -1;
     }
-    cout << endl;
+    Node* node = this->nodes[0];
+    int returned_id = node->get_id();
+    this->size--;
+    this->nodes[0] = this->nodes[this->size];
+    this->nodes[this->size] = nullptr;
+    delete node;
+    this->correct_descending(0);
+    
+    return returned_id;
 }
 
-void Heap::imprime_ordenado() {
-
+string Heap::get_string() {
+    string text = "";
+    for(int i = 0; i < this->size; i++) {
+        text += "(" + to_string(this->nodes[i]->get_id()) + ", ";
+        text += to_string(this->nodes[i]->get_weight()) + ") ";
+    }
+    return text;
 }
+

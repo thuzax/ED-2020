@@ -6,19 +6,35 @@ using namespace std;
 
 int main() {
     Heap h = Heap(10);
-    h.adiciona(2);
-    h.adiciona(10);
-    h.adiciona(8);
-    h.adiciona(4);
-    h.adiciona(7);
-    h.adiciona(6);
-    h.adiciona(5);
-    h.adiciona(1);
-    h.adiciona(3);
+    h.add(2, 1);
+    h.add(10, 3);
+    h.add(8, 2);
+    h.add(4, 4);
+    h.add(7, 5);
+    h.add(6, 2);
+    h.add(5, 7);
+    h.add(1, 9);
+    h.add(3, 3);
 
+    cout << h.get_string() << endl;
 
-
-
-    h.imprime();
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
+    cout << h.remove() << endl;
+    cout << h.get_string() << endl;
     return 0;
 }

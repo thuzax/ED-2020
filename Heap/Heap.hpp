@@ -1,43 +1,56 @@
 // Heap
 
 #include <iostream>
+#include <string>
 
-#include "Noh.hpp"
+using namespace std;
+
+class Node {
+    private:
+        int id;
+        double weight;
+
+    public:
+        Node(int id, double weight);
+
+        void set_id(int id);
+        void set_weight(double weight);
+        int get_id();
+        double get_weight();
+};
+
 
 class Heap {
     private:
-        int contador_id;
+        Node** nodes;
+        bool ascending;
 
-        Noh** vetor;
-        bool crescente;
+        int size;
+        int max_size;
 
-        int tamanho;
-        int tamanho_maximo;
+        bool verify_previous(Node* node, Node* previous);
+        bool verify_next(Node* node, Node* next);
 
-        bool verifica_ordem_anterior(Noh* noh, Noh* anterior);
-        bool verifica_ordem_proxima(Noh* noh, Noh* proximo);
+        bool heap_is_empty();
+        bool heap_is_full();
 
-        bool heap_vazia();
-        bool heap_cheia();
-        bool indice_invalido();
-
-        void corrige_subindo(int pos);
+        void correct_climbing(int pos);
+        void correct_descending(int pos);
 
     public:
-        Heap(int tamanho_maximo, bool crescente = true);
+        Heap(int max_size, bool ascending = true);
         ~Heap();
 
 
-        int pos_pai(int pos_filho);
-        int pos_direita(int pos_pai);
-        int pos_esquerda(int pos_pai);
+        int father_pos(int child_pos);
+        int left_pos(int father_pos);
+        int right_pos(int father_pos);
         
-        void adiciona(int dado);
-        void set_dado(int id, int dado);
+        void add(int id, double weight);
+        void set_id(int id, double weight);
         int remove();
 
 
-        void imprime();
-        void imprime_ordenado();
+        string get_string();    
 
 };
