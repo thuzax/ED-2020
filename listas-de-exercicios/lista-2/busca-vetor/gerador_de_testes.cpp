@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
     }
 
     saida << endl;
+    saida.close();
 
     return 0;
 }

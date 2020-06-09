@@ -107,6 +107,14 @@ int VetorBusca::busca_binaria(int element){
 
 }
 
+int VetorBusca::get_primeiro_elemento() {
+    return this->vetor[0];
+}
+
+int VetorBusca::get_ultimo_elemento() {
+    return this->vetor[this->tam_atual-1];
+}
+
 string VetorBusca::get_string(){
     string text = "";
     

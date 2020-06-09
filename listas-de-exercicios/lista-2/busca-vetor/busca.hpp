@@ -37,6 +37,10 @@ class VetorBusca {
         /* retorna a posição onde um element está em um vetor, e retorna -1 caso não seja encontrado, utilizando busca binária, e considerando que o vetor passado está ordenado. */
         int busca_binaria(int element);
 
+        /* funções auxiliares para testar a busca com primeiro e ultimo elemento do vetor */
+        int get_primeiro_elemento();
+        int get_ultimo_elemento();
+
         string get_string();
 
 };
