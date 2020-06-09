@@ -48,26 +48,11 @@ int VetorBusca::inserir_ordenado(int elemento){
         continua_maior = (elemento >= this->vetor[pos_insercao]);
     }
 
-    if (pos_insercao == tam_atual) {
-        this->inserir(elemento);
-        return 0;
+    for (int i = tam_atual; i > pos_insercao; i--) {
+        this->vetor[i] = this->vetor[i-1];
     }
-
-    int* novo_vetor = new int[this->tam_maximo];
-
-    for (int i = 0; i < pos_insercao; i++) {
-        novo_vetor[i] = this->vetor[i];
-    }
-
-    novo_vetor[pos_insercao] = elemento;
-
-    for (int i = pos_insercao; i < (this->tam_maximo-1); i++) {
-        novo_vetor[i+1] = this->vetor[i];
-    }
-
-    delete[] this->vetor;
-    this->vetor = novo_vetor;
-
+    
+    this->vetor[pos_insercao] = elemento;
     this->tam_atual++;
 
     return 0;
@@ -86,10 +71,12 @@ int VetorBusca::busca_sequencial(int elemento){
 }
 
 int VetorBusca::busca_binaria(int element){
+    int num_verificacoes = 0;
     int end = this->tam_atual-1;
     int start = 0;
     int i = (start+end)/2;
     while (end >= start and element != this->vetor[i]) {
+        num_verificacoes++;
         if (element < this->vetor[i]) {
             end = i-1;
         }
@@ -98,11 +85,12 @@ int VetorBusca::busca_binaria(int element){
         }
         i = (start+end)/2;
     }
+    num_verificacoes++;
 
+    cout << "Número de verificacoes: " << num_verificacoes << endl;
     if (start > end) {
         return -1;
     }
-
     return i;
 
 }

@@ -37,8 +37,9 @@ int main() {
         for (int j = 0; j < qtd_buscas; j++) {
             int elemento;
             entrada >> elemento;
+            int pos = vetor_sequencial.busca_sequencial(elemento);
             cout << "Elemento " << elemento << " encontrado na posicao: ";
-            cout << vetor_sequencial.busca_sequencial(elemento) << endl;
+            cout << pos << endl;
         }
 
         entrada.close();
@@ -72,31 +73,39 @@ int main() {
 
         cout << "Busca sequencial: " << endl;
         for (int j = 0; j < qtd_buscas; j++) {
+            int pos = vetor_ordenado.busca_sequencial(elementos[j]);
             cout << "Elemento " << elementos[j] << " encontrado na posicao: ";
-            cout << vetor_ordenado.busca_sequencial(elementos[j]) << endl;
+            cout << pos << endl;
         }
 
+        int pos;
+
+        pos = vetor_ordenado.busca_sequencial(primeiro_elemento);
         cout << "Primeiro elemento " << primeiro_elemento;
         cout << " encontrado na posicao: ";
-        cout << vetor_ordenado.busca_sequencial(primeiro_elemento) << endl;
+        cout << pos << endl;
         
+        pos = vetor_ordenado.busca_sequencial(ultimo_elemento);
         cout << "Ultimo elemento " << ultimo_elemento;
         cout << " encontrado na posicao: ";
-        cout << vetor_ordenado.busca_sequencial(ultimo_elemento) << endl;
+        cout << pos << endl;
         
         cout << "Busca binaria: " << endl;
         for (int j = 0; j < qtd_buscas; j++) {
+            int pos = vetor_ordenado.busca_binaria(elementos[j]);
             cout << "Elemento " << elementos[j] << " encontrado na posicao: ";
-            cout << vetor_ordenado.busca_binaria(elementos[j]) << endl;
+            cout << pos << endl;
         }
 
+        pos = vetor_ordenado.busca_binaria(primeiro_elemento);
         cout << "Primeiro elemento: " << primeiro_elemento;
         cout << " encontrado na posicao ";
-        cout << vetor_ordenado.busca_binaria(primeiro_elemento) << endl;
+        cout << pos << endl;
         
+        pos = vetor_ordenado.busca_binaria(ultimo_elemento);
         cout << "Ultimo elemento: " << ultimo_elemento;
         cout << " encontrado na posicao ";
-        cout << vetor_ordenado.busca_binaria(ultimo_elemento) << endl;
+        cout << pos << endl;
         
         entrada.close();
     }

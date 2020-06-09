@@ -9,8 +9,10 @@ using namespace std;
 
 int main(int argc, char** argv) {
     int quantidade;
+    cout << "Quantidade de numeros gerados: ";
     cin >> quantidade;
     int num_buscas;
+    cout << "Quantidade de buscas a serem feita: ";
     cin >> num_buscas;
 
     int vetor_aleatorio[quantidade];
