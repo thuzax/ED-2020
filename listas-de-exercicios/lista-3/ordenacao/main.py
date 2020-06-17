@@ -1,26 +1,32 @@
 import random
 import time
+import sys
+import copy
 
 from algoritmos_ordenacao import bubble_sort
 from algoritmos_ordenacao import merge_sort
 from algoritmos_ordenacao import quick_sort
 
 def executa_teste(vetor):
-    vetor_teste = vetor
+    vetor_teste = copy.copy(vetor)
     
-    tempo_ini = time.time()
-    resultado_bubble = bubble_sort(vetor_teste)
-    tempo_fim = time.time()
-    tempo_bubble = tempo_fim - tempo_ini
+    if (len(vetor) > 10000):
+        resultado_bubble = (None, None)
+        tempo_bubble = -1
+    else:
+        tempo_ini = time.time()
+        resultado_bubble = bubble_sort(vetor_teste)
+        tempo_fim = time.time()
+        tempo_bubble = tempo_fim - tempo_ini
 
-    vetor_teste = vetor
+    vetor_teste = copy.copy(vetor)
     
     tempo_ini = time.time()
     resultado_merge = merge_sort(vetor_teste)
     tempo_fim = time.time()
     tempo_merge = tempo_fim - tempo_ini
     
-    vetor_teste = vetor
+    vetor_teste = copy.copy(vetor)
     
     tempo_ini = time.time()
     resultado_quick = quick_sort(vetor_teste)
@@ -35,18 +41,28 @@ def executa_teste(vetor):
 
 
 if __name__=="__main__":
+
+    arquivo_saida = None
+    if (len(sys.argv) > 1):
+        arquivo_saida = open(sys.argv[1], "w")
+    
+    tamanho_testes = [100, 1000, 1000000]
+
     vets_desordenado = []
+    
     vets_bubble = []
     vets_merge = []
     vets_quick = []
+    
     vet_passos_bubble = []
     vet_passos_merge = []
     vet_passos_quick = []
+    
     vet_tempos_bubble = []
     vet_tempos_merge = []
     vet_tempos_quick = []
     
-    for i in [100, 1000, 10000]:
+    for i in tamanho_testes:
         print("Criando vetor tamanho " + str(i) + "\n")
         vetor = random.sample(range(0, i*100), i)
         vets_desordenado.append(vetor)
@@ -160,4 +176,100 @@ if __name__=="__main__":
 
     print()
 
+    #-------------------Escrita dos resultados em arquivo-----------------------
 
+    if (arquivo_saida != None):
+        texto = ""
+
+        texto += "-----------------------Resultados----------------------------"
+        texto += "\n"
+
+        texto += "Vetor desordenado (100) \n"
+        texto += str(vets_desordenado[0]) + "\n"
+
+        texto += "Resultado bubble sort (100) \n"
+        texto += str(vets_bubble[0]) + "\n"
+
+        texto += "Resultado merge sort (100) \n"
+        texto += str(vets_merge[0]) + "\n"
+
+        texto += "Resultado quick sort (100) \n"
+        texto += str(vets_quick[0]) + "\n"
+        
+        texto += "\n"
+
+        texto += "Vetor desordenado (1000) \n"
+        texto += str(vets_desordenado[1]) + "\n"
+        
+        texto += "Resultado bubble sort (1000) \n"
+        texto += str(vets_bubble[1]) + "\n"
+
+        texto += "Resultado merge sort (1000) \n"
+        texto += str(vets_merge[1]) + "\n"
+
+        texto += "Resultado quick sort (1000) \n"
+        texto += str(vets_quick[1]) + "\n"
+
+        texto += "\n"
+
+        texto += "Vetor desordenado (1000000) \n"
+        texto += str(vets_desordenado[2]) + "\n"
+
+        texto += "Resultado bubble sort (1000000) \n"
+        texto += str(vets_bubble[2]) + "\n"
+        
+        texto += "Resultado merge sort (1000000) \n"
+        texto += str(vets_merge[2]) + "\n"
+
+        texto += "Resultado quick sort (1000000) \n"
+        texto += str(vets_quick[2]) + "\n"
+
+        texto += "\n"
+
+        texto += "---------------------Estatisticas----------------------------"
+        texto += "\n"
+
+        texto += "Passos bubble sort (100) \n"
+        texto += str(vet_passos_bubble[0]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_bubble[0]) + "\n"
+
+        texto += "Passos merge sort (100) \n"
+        texto += str(vet_passos_merge[0]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_merge[0]) + "\n"
+
+        texto += "Passos quick sort (100) \n"
+        texto += str(vet_passos_quick[0]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_quick[0]) + "\n"
+
+        texto += "\n"
+
+        texto += "Passos bubble sort (1000) \n"
+        texto += str(vet_passos_bubble[1]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_bubble[1]) + "\n"
+
+        texto += "Passos merge sort (1000) \n"
+        texto += str(vet_passos_merge[1]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_merge[1]) + "\n"
+
+        texto += "Passos quick sort (1000) \n"
+        texto += str(vet_passos_quick[1]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_quick[1]) + "\n"
+
+        texto += "\n"
+
+        texto += "Passos bubble sort (100000) \n"
+        texto += str(vet_passos_bubble[2]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_bubble[2]) + "\n"
+
+        texto += "Passos merge sort (100000) \n"
+        texto += str(vet_passos_merge[2]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_merge[2]) + "\n"
+
+        texto += "Passos quick sort (100000) \n"
+        texto += str(vet_passos_quick[2]) + "\n"
+        texto += "Tempo: " + str(vet_tempos_quick[2]) + "\n"
+
+        texto += "\n"
+        
+        arquivo_saida.write(texto)
+        arquivo_saida.close()
