@@ -47,7 +47,27 @@ class ArvoreBinariaBusca:
         pai.esquerda = novo
         novo.pai = pai
 
-    
+    def busca_recursiva(self, noh, item):
+        passos = 1
+        if (noh is None):
+            return ("Não achou", passos)
+        if (noh.indice == item):
+            return ("Achou", passos)
+        if (noh.indice > item):
+            texto, passos_retorno = self.busca_recursiva(noh.esquerda, item)
+            passos += passos_retorno
+            return (texto, passos)
+        if (noh. indice < item):
+            texto, passos_retorno = self.busca_recursiva(noh.direita, item)
+            passos += passos_retorno
+            return (texto, passos)
+        
+        return (texto, passos)
+
+        
+
+    def busca(self, item):
+        return self.busca_recursiva(self.raiz, item)
 
 
     def get_texto_itens_descendo_recursivo(self, noh):

@@ -17,17 +17,25 @@ if __name__=="__main__":
 
     
     
-    vetor_teste = random.sample(range(0, 100), 100)
-    # vetor_teste = [9,8,7,6,5,4,3,2,1,0]
-    # random.shuffle(vetor_teste)
-    vetor_ordenado, numero_de_passos = quick_sort(copy.copy(vetor_teste))
+    vetor_desordenado = random.sample(range(0, 100), 100)
+    vetor_ordenado, numero_de_passos = quick_sort(copy.copy(vetor_desordenado))
     
     texto_saida = ""
     texto_saida += "Vetor de teste aleatorio:\n"
-    texto_saida += str(vetor_teste) + "\n"
+    texto_saida += str(vetor_desordenado) + "\n"
     texto_saida += "Vetor de teste ordenado:\n"
     texto_saida += str(vetor_ordenado) + "\n"
 
+    texto_saida += "\n\n"
+
+    #-------------------------------Inserções-----------------------------------
+
+
+    texto_saida += "+++++++++++++++++++++++++++++++++++"
+    texto_saida += "Inserções"
+    texto_saida += "+++++++++++++++++++++++++++++++++++\n"
+
+    texto_saida += "\n\n"
 
     texto_saida += "---------------------------------------------------------\n"
     texto_saida += "******************Arvore Binária de Busca****************\n"
@@ -37,7 +45,7 @@ if __name__=="__main__":
     #------------------------Arvore com vetor desordenado-----------------------
     abb_vetor_desordenado = ArvoreBinariaBusca()
 
-    for i in vetor_teste:
+    for i in vetor_desordenado:
         abb_vetor_desordenado.adiciona(i)
 
 
@@ -76,7 +84,7 @@ if __name__=="__main__":
     #------------------------Arvore com vetor desordenado-----------------------
     avl_desordenada = AVL()
 
-    for i in vetor_teste:
+    for i in vetor_desordenado:
         avl_desordenada.adiciona(i)
 
 
@@ -104,6 +112,35 @@ if __name__=="__main__":
     texto_saida += "\n"
 
     texto_saida += "\n\n"
+
+    #---------------------------------Buscas------------------------------------
+
+
+    texto_saida += "+++++++++++++++++++++++++++++++++++++"
+    texto_saida += "Buscas"
+    texto_saida += "+++++++++++++++++++++++++++++++++++++\n"
+
+
+
+    texto_saida += "Árvore de Busca Binária (vetor desordenado):\n"
+    resultado, passos = abb_vetor_desordenado.busca(vetor_desordenado[-1])
+    texto_saida += str(resultado) + "\n"
+    texto_saida += str(passos) + "\n"
+    
+    texto_saida += "Árvore de Busca Binária (vetor ordenado):\n"
+    resultado, passos = abb_vetor_ordenado.busca(vetor_ordenado[-1])
+    texto_saida += str(resultado) + "\n"
+    texto_saida += str(passos) + "\n"
+    
+    texto_saida += "AVL (vetor desordenado):\n"
+    resultado, passos = avl_desordenada.busca(vetor_desordenado[-1])
+    texto_saida += str(resultado) + "\n"
+    texto_saida += str(passos) + "\n"
+    
+    texto_saida += "AVL (vetor ordenado):\n"
+    resultado, passos = avl_ordenada.busca(vetor_ordenado[-1])
+    texto_saida += str(resultado) + "\n"
+    texto_saida += str(passos) + "\n"
 
     #-------------------------Escrita dos resultados----------------------------
     
