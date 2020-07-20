@@ -3,7 +3,7 @@
 #ifndef BTREE_HPP
 #define BTREE_HPP
 
-#define T 25
+#define T 50
 #define BTREE_OK 0
 #define BTREE_ERR -1
 
@@ -25,6 +25,8 @@ typedef struct btree_node
 typedef struct btree
 {
      struct btree_node *root;
+     int root_position;
+     int tamanho;
      FILE *fp;
      int passos_teste_busca;
      int realizando_teste_busca;

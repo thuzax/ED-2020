@@ -5,7 +5,7 @@
 
 static int btree_read_disk(btree *tree, int seek, btree_node *node)
 {
-
+    seek += sizeof(int) + sizeof(int);
     if(fseek(tree->fp, seek, SEEK_SET) == -1)
         return BTREE_ERR;
     char *read_buf = calloc(1, sizeof(btree_node));
@@ -17,12 +17,60 @@ static int btree_read_disk(btree *tree, int seek, btree_node *node)
 
 static int btree_write_disk(btree *tree, int seek, btree_node *node)
 {
+    seek += 2*sizeof(int);
     if(fseek(tree->fp, seek, SEEK_SET) == -1)
         return BTREE_ERR;
     if(fwrite((void *)node, sizeof(btree_node), 1, tree->fp) == -1)
         return BTREE_ERR;
     return BTREE_OK;
 }
+
+static int write_header(btree *tree)
+{
+    int seek = 0;
+    if(fseek(tree->fp, seek, SEEK_SET) == -1)
+    {
+        printf("ERRO ESCRITA CABEÇALHO\n");
+        exit(1);
+    }
+    if(fwrite(&(tree->root_position), sizeof(int), 1, tree->fp) == -1)
+    {
+        printf("ERRO ESCRITA CABEÇALHO\n");
+        exit(1);
+    }
+    if(fwrite(&(tree->tamanho), sizeof(int), 1, tree->fp) == -1)
+    {
+        printf("ERRO ESCRITA CABEÇALHO\n");
+        exit(1);
+    }
+    
+}
+
+static int read_header(btree *tree)
+{
+    int seek = 0;
+    if(fseek(tree->fp, seek, SEEK_SET) == -1)
+    {
+        printf("ERRO LEITURA CABEÇALHO\n");
+        exit(1);
+    }
+    char *read_buf = calloc(1, sizeof(int));
+    if(fread(read_buf, sizeof(int), 1, tree->fp) == -1)
+    {
+        printf("ERRO LEITURA CABEÇALHO\n");
+        exit(1);
+    }
+    memcpy(&(tree->root_position), read_buf, sizeof(int));
+
+    if(fread(read_buf, sizeof(int), 1, tree->fp) == -1)
+    {
+        printf("ERRO LEITURA CABEÇALHO\n");
+        exit(1);
+    }
+    memcpy(&(tree->tamanho), read_buf, sizeof(int));
+    
+}
+
 
 static int btree_key_index(btree_node *node, int key)
 {
@@ -107,25 +155,46 @@ int file_exists(const char *file)
 
 btree *btree_create(const char *file)
 {
+    btree *tree = calloc(1, sizeof(btree));
+    if(tree == NULL)
+        return NULL;
+    
     FILE *fp;
+    tree->fp = fp;
+    tree->root_position = -1;
+    tree->tamanho = 0;
+
     if (file_exists(file))
-        fp = fopen(file, "r+");
+    {
+        tree->fp = fopen(file, "r+");
+        read_header(tree);
+        tree->root = btree_node_create();
+        btree_read_disk(tree, tree->root_position, tree->root);
+    }
     else
-        fp = fopen(file, "w+");
+    {
+        tree->fp = fopen(file, "w+");
+        write_header(tree);
+    }
     
     if(!fp)
         return NULL;
     
-    btree *tree = calloc(1, sizeof(btree));
-    if(tree == NULL)
-        return NULL;
-    tree->fp = fp;
-    tree->root = btree_node_create();
-    tree->root->self = 0;
-    tree->realizando_teste_busca = 0;
-    tree->passos_teste_busca = 0;
-    if(btree_write_disk(tree, tree->root->self, tree->root) == BTREE_ERR)
-        return NULL;
+    if (tree->root_position == -1)
+    {
+        tree->root = btree_node_create();
+        tree->root->self = 0;
+        tree->realizando_teste_busca = 0;
+        tree->passos_teste_busca = 0;
+        if(btree_write_disk(tree, tree->root->self, tree->root) == BTREE_ERR)
+        {
+            return NULL;
+        }
+        tree->root_position = tree->root->self;
+        tree->tamanho = 1;
+        write_header(tree);
+    }
+    
     return tree;
 }
 
@@ -199,6 +268,7 @@ int main(int argc, char *argv[])
 
 
 
+
     // marca que o teste sera feito para armazenar o número de passos gastos
     tree->realizando_teste_busca = 1;
     
@@ -240,7 +310,12 @@ int btree_insert(btree *tree, int key)
     if(btree_write_disk(tree, node->self, node) == BTREE_ERR)
         return BTREE_ERR;
     if(tree->root->self == node->self)
+    {
         *tree->root = *node;
+        tree->root_position = tree->root->self;
+    }
+    tree->tamanho += 1;
+    write_header(tree);
     return BTREE_OK;
 }
 
@@ -277,6 +352,7 @@ int btree_split(btree *tree, btree_node *node)
         tree->root = parent;
         parent->self = brother->self + sizeof(btree_node);
         node->parent = parent->self;
+        tree->root_position = tree->root->self;
     }
     else
         if(btree_read_disk(tree, node->parent, parent) == BTREE_ERR)
@@ -302,6 +378,7 @@ int btree_split(btree *tree, btree_node *node)
     if(btree_read_disk(tree, tree->root->self, tree->root) == BTREE_ERR)
         return BTREE_ERR;
     *node = *parent;
+    write_header(tree);
     return BTREE_OK;
 }
 
@@ -322,7 +399,10 @@ int btree_delete(btree *tree, int key)
         if(btree_write_disk(tree, node->self, node) == BTREE_ERR)
             return BTREE_ERR;
         if(node->self == tree->root->self)
+        {
             *tree->root = *node;
+            tree->root_position = tree->root->self;
+        }
         node = successor;
         key_index = 0;
     }
@@ -402,11 +482,18 @@ int btree_delete(btree *tree, int key)
         btree_write_disk(tree, node->self, node);
         btree_write_disk(tree, brother->self, brother);
         if(tree->root->self == parent->self)
+        {
             *tree->root = *parent;
+            tree->root_position = tree->root->self;
+        }
         *node = *parent;
     }
     if(tree->root->self == node->self)
+    {
         *tree->root = *node;
+        tree->root_position = tree->root->self;
+    }
+    write_header(tree);
     return BTREE_OK;
 }
 
@@ -445,9 +532,11 @@ int btree_merge(btree *tree, btree_node *left, btree_node *right, btree_node *pa
     {
         left->parent = -1;
         *tree->root = *left;
+        tree->root_position = tree->root->self;
     }
     btree_write_disk(tree, parent->self, parent);
     btree_write_disk(tree, left->self, left);
     btree_write_disk(tree, right->self, right);
+    write_header(tree);
     return BTREE_OK;
 }
