@@ -3,7 +3,7 @@
 #ifndef BTREE_HPP
 #define BTREE_HPP
 
-#define T 50
+#define T 25
 #define BTREE_OK 0
 #define BTREE_ERR -1
 
