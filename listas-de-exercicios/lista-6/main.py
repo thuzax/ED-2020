@@ -21,11 +21,18 @@ if __name__ == "__main__":
     num_vertices, arestas = gerenciador_arquivo.ler_grafo(arquivo_entrada)
     grafo = Grafo(num_vertices, arestas, tipo_grafo)
     
-    text = ""
-    text += str(grafo.get_num_vertices()) + "\n"
-    text += str(grafo.get_num_arestas()) + "\n"
-    text += str(grafo.get_grau_medio()) + "\n"
+    tamanho_grafo = grafo.get_espaco_alocado()
 
+    text = ""
+    text += "Número de vértices: "
+    text += str(grafo.get_num_vertices()) + "\n"
+    text += "Número de arestas: "
+    text += str(grafo.get_num_arestas()) + "\n"
+    text += "Grau médio: "
+    text += str(grafo.get_grau_medio()) + "\n"
+    text += "Espaço ocupado: "
+    text += str(tamanho_grafo) 
+    text += "B" + "\n"
     print(text)
 
     with open(arquivo_saida, "w") as saida:

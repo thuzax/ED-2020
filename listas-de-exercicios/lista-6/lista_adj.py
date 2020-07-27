@@ -1,3 +1,5 @@
+import sys
+
 class ListaAdjacencia:
     def __init__(self, num_vertices, arestas):
         self.num_vertices = num_vertices
@@ -9,6 +11,14 @@ class ListaAdjacencia:
         for v1, v2 in arestas:
             self.lista[v1].append(v2)
             self.lista[v2].append(v1)
+
+    def get_espaco_alocado(self):
+        quantidade_bytes = 0
+        for vizinhos in self.lista:
+            quantidade_bytes += sys.getsizeof(vizinhos)
+        
+        quantidade_bytes += sys.getsizeof(self.num_vertices)
+        return quantidade_bytes
 
     def get_string(self):
         texto = ""

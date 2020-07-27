@@ -1,3 +1,5 @@
+import sys
+
 from matriz_adj import MatrizAdjacencia
 from lista_adj import ListaAdjacencia
 
@@ -27,6 +29,13 @@ class Grafo:
 
     def get_grau_medio(self):
         return (2 * self.num_arestas / self.num_vertices)
+
+    def get_espaco_alocado(self):
+        tam_grafo = self.grafo.get_espaco_alocado()
+        tam_grafo += sys.getsizeof(self.num_arestas)
+        tam_grafo += sys.getsizeof(self.num_arestas)
+
+        return tam_grafo
 
     def get_string(self):
         texto = self.grafo.get_string()

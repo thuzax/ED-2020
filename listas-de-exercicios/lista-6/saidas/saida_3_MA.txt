@@ -1,3 +1,4 @@
-6000
-1000000
-333.3333333333333
+Número de vértices: 6000
+Número de arestas: 1000000
+Grau médio: 333.3333333333333
+Espaço ocupado: 871889116B
