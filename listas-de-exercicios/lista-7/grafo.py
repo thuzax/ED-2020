@@ -1,6 +1,6 @@
 import sys
 
-from matriz_adj import MatrizAdjacencia
+from bellman_ford import BellmanFord
 from lista_adj import ListaAdjacencia
 
 class Grafo:
@@ -29,8 +29,6 @@ class Grafo:
             peso = aresta_por_nome[2]
             aresta = (v1, v2, peso)
             self.arestas.append(aresta)
-
-        self.grafo = MatrizAdjacencia(self.num_vertices, self.arestas)
     
     def get_num_vertices(self):
         return self.num_vertices
@@ -41,17 +39,54 @@ class Grafo:
     def get_grau_medio(self):
         return (2 * self.num_arestas / self.num_vertices)
 
-    def get_espaco_alocado(self):
-        tam_grafo = self.grafo.get_espaco_alocado()
-        tam_grafo += sys.getsizeof(self.num_arestas)
-        tam_grafo += sys.getsizeof(self.num_arestas)
+    def get_caminhos_bellman_ford(self, nome_origem):
+        caminho_minimo = BellmanFord(self.num_vertices, self.arestas)
 
-        return tam_grafo
+        origem = self.indices_vertices[nome_origem]
+        resultados = caminho_minimo.bellman_ford(origem)
 
-    def bellman_ford(self, origem):
-        self.grafo.bellman_ford(origem)
+        if (resultados is None):
+            return resultados;
 
+        custos, pais = resultados
 
-    def get_string(self):
-        texto = self.grafo.get_string(self.nomes_vertices)
-        return texto
+        caminhos = []
+        for destino in range(self.num_vertices):
+            caminho = [destino]
+            
+            
+            intermediario = destino
+            pai = pais[intermediario]
+            
+            if (pai is None and destino != origem):
+                caminho = [None]
+                caminhos.append(caminho)
+                continue
+
+            while ((pai is not None) and (intermediario != origem)):
+                pai = pais[intermediario]
+                caminho.append(pai)
+                
+                intermediario = pai
+            
+            caminhos.append(caminho)
+        
+        caminhos_nomes = []
+        for caminho in caminhos:
+            caminho_nomes = []
+
+            for v in caminho:
+                if (v is None):
+                    nome = None
+                else:
+                    nome = self.nomes_vertices[v]
+                caminho_nomes.insert(0, nome)
+            
+            caminhos_nomes.append(caminho_nomes)
+
+        caminhos_custos = []
+        for i in range(self.num_vertices):
+            destino = self.nomes_vertices[i]
+            caminhos_custos.append((destino, caminhos_nomes[i], custos[i]))
+
+        return caminhos_custos

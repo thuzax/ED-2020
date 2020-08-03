@@ -17,33 +17,27 @@ if __name__ == "__main__":
     dados_grafo = gerenciador_arquivo.ler_grafo(arquivo_entrada)
     num_vertices, nomes_vertices, arestas = dados_grafo
     
-    print(num_vertices)
-    print(nomes_vertices)
-    print(arestas)
-    
+
     grafo = Grafo(num_vertices, nomes_vertices, arestas)
 
-    print(grafo.get_string())
-
     origem = 1
-    grafo.bellman_ford(origem)
-
-
-    exit(0)
-
-
-    tamanho_grafo = grafo.get_espaco_alocado()
+    caminhos_custos = grafo.get_caminhos_bellman_ford(origem)
 
     text = ""
-    text += "Número de vértices: "
-    text += str(grafo.get_num_vertices()) + "\n"
-    text += "Número de arestas: "
-    text += str(grafo.get_num_arestas()) + "\n"
-    text += "Grau médio: "
-    text += str(grafo.get_grau_medio()) + "\n"
-    text += "Espaço ocupado: "
-    text += str(tamanho_grafo) 
-    text += "B" + "\n"
+
+    if (caminhos_custos is None):
+        text = "Tem ciclo negativo"
+    else:
+        for i in range(len(caminhos_custos)):
+            text += "Menor caminho para "
+            text += str(caminhos_custos[i][0]) + ": "
+            for v in caminhos_custos[i][1]:
+                text += str(v) + " "
+            text += ": "
+            text += "custo = "
+            text += str(caminhos_custos[i][2])
+            text += "\n"
+
     print(text)
 
     with open(arquivo_saida, "w") as saida:
