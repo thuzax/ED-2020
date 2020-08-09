@@ -1,14 +1,14 @@
 import sys
 import random
 
-def gerar_arestas_aleatorias(num_vertices, num_arestas):
+def gerar_arestas_aleatorias(num_vertices, num_arestas, cap_minima, cap_maxima):
     aleatorios = set()
 
     dict_arestas = {}
     while(num_arestas > 0):
         res = random.sample(range(num_vertices), 2)
         key = (res[0], res[1])
-        peso = random.randint(1, 100)
+        peso = random.randint(cap_minima, cap_maxima)
         if (key not in dict_arestas):
             dict_arestas[key] = peso
             aresta = (res[0], res[1], peso)
@@ -19,15 +19,20 @@ def gerar_arestas_aleatorias(num_vertices, num_arestas):
 
 
 if __name__ == "__main__":
-    if (len(sys.argv) < 4):
-        print("Arquivo saida, numero de vertices, numero de arestas necessarios")
+    if (len(sys.argv) < 6):
+        print("Arquivo saida, numero de vertices, numero de arestas necessarios, capacidade minima, capacidade maxima")
         exit(0)
     
     nome_arquivo = sys.argv[1]
     num_vertices = int(sys.argv[2])
     num_arestas = int(sys.argv[3])
+    capacidade_minima = int(sys.argv[4])
+    capacidade_maxima = int(sys.argv[5])
 
-    arestas = gerar_arestas_aleatorias(num_vertices, num_arestas)
+    arestas = gerar_arestas_aleatorias(
+                num_vertices, num_arestas, 
+                capacidade_minima, capacidade_maxima
+            )
 
     s = str(random.randint(0, num_vertices))
     t = str(random.randint(0, num_vertices))
@@ -40,6 +45,8 @@ if __name__ == "__main__":
     texto += str(s)
     texto += " "
     texto += str(t)
+    texto += " "
+    texto += str(len(arestas))
     texto += "\n"
 
     for v1, v2, peso in arestas:
