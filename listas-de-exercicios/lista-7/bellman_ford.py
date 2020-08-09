@@ -4,9 +4,10 @@ class BellmanFord:
     def __init__(self, num_vertices, arestas):
         self.num_vertices = num_vertices
         self.arestas = arestas
-
+        self.contador = 0
 
     def relaxar(self, custos, pais, u, v, peso):
+        self.contador += 1
         if (peso == 0):
             return None
         peso_relaxado = custos[u] + peso
@@ -17,6 +18,7 @@ class BellmanFord:
 
 
     def bellman_ford(self, origem):
+        self.contador = 0
         VALOR_GRANDE = 999999999
         custos = []
         pais = []
@@ -38,6 +40,4 @@ class BellmanFord:
                 return None
 
         return (custos, pais)
-
-
 

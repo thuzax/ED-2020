@@ -89,4 +89,4 @@ class Grafo:
             destino = self.nomes_vertices[i]
             caminhos_custos.append((destino, caminhos_nomes[i], custos[i]))
 
-        return caminhos_custos
+        return (caminhos_custos, caminho_minimo.contador)

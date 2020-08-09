@@ -21,7 +21,7 @@ if __name__ == "__main__":
     grafo = Grafo(num_vertices, nomes_vertices, arestas)
 
     origem = 1
-    caminhos_custos = grafo.get_caminhos_bellman_ford(origem)
+    caminhos_custos, contador = grafo.get_caminhos_bellman_ford(origem)
 
     text = ""
 
@@ -39,6 +39,7 @@ if __name__ == "__main__":
             text += "\n"
 
     print(text)
+    print("numero de relaxacoes: ", contador)
 
     with open(arquivo_saida, "w") as saida:
         saida.write(text)
