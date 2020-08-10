@@ -1,7 +1,8 @@
 import sys
 
-
 import gerenciador_arquivo
+
+from grafo import Grafo
 
 if __name__=="__main__":
     if (len(sys.argv) < 2):
@@ -10,4 +11,27 @@ if __name__=="__main__":
     
     nome_arquivo = sys.argv[1]
     
-    a = gerenciador_arquivo.ler_grafo(nome_arquivo)
+    dados_arquivo = gerenciador_arquivo.ler_grafo(nome_arquivo)
+    num_vertices, arestas, origem, destino = dados_arquivo
+    
+    grafo = Grafo(num_vertices, arestas)
+
+    texto = ""
+
+    texto += "origem:"
+    texto += str(origem)
+    texto += "\n"
+    texto += "destino:"
+    texto += str(destino)
+    texto += "\n"
+    texto += "-------------------------------\n"
+    texto += "Fluxo Total: "
+    texto += str(grafo.ford_fulkerson(origem, destino))
+    texto += "\n"
+
+    # Para imprimir o fluxo em cada aresta, descomente as linhas abaixo 
+    texto += "Fluxo em cada aresta: \n"
+    texto += str(grafo.get_string_arestas())
+    texto += "\n"
+
+    print(texto)

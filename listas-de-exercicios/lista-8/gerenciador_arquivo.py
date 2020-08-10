@@ -12,11 +12,7 @@ def ler_grafo(nome_arquvio):
     inicio_arestas = 2
     for i in range(inicio_arestas, num_arestas + inicio_arestas):
         aresta_txt = texto[i].split()
-        aresta = (int(aresta_txt[0]), int(aresta_txt[1]))
+        aresta = (int(aresta_txt[0]), int(aresta_txt[1]), int(aresta_txt[2]))
         arestas.append(aresta)
-    print(num_vertices)
-    print(arestas)
-    print(origem)
-    print(destino)
 
-    return (num_vertices, arestas)
+    return (num_vertices, arestas, origem, destino)
