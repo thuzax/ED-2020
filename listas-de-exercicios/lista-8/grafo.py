@@ -3,10 +3,10 @@ from vertice import Vertice
 from aresta import Aresta
 
 
-
-
 class Grafo:
     def __init__(self, num_vertices, arestas):
+        self.num_comparacoes = 0
+
         # Cria os vertices
         self.vertices = []
         for i in range(num_vertices):
@@ -73,6 +73,7 @@ class Grafo:
         while (len(fila) > 0 and not encontrou):
             u = fila.pop(0)
             for v in self.grafo.get_vizinhos(u):
+                self.num_comparacoes += 1
                 vizinho = self.vertices[v]
                 aresta = self.dic_arestas[(u,v)]
                 
@@ -121,6 +122,8 @@ class Grafo:
         return menor_custo
 
     def ford_fulkerson(self, origem_idx, destino_idx):
+        self.num_comparacoes = 0
+        
         for aresta in self.dic_arestas.values():
             aresta.fluxo = 0
 
@@ -129,6 +132,7 @@ class Grafo:
                             )
         
         while (len(caminho_aumentante) > 0):
+            # self.num_comparacoes += 1
             arestas_caminho_aumentante = self.get_arestas_caminho(
                                             caminho_aumentante
                                         )

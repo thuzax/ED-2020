@@ -28,10 +28,14 @@ if __name__=="__main__":
     texto += "Fluxo Total: "
     texto += str(grafo.ford_fulkerson(origem, destino))
     texto += "\n"
+    texto += "Número Comparações: "
+    texto += str(grafo.num_comparacoes)
+    texto += "\n"
+    
 
     # Para imprimir o fluxo em cada aresta, descomente as linhas abaixo 
-    texto += "Fluxo em cada aresta: \n"
-    texto += str(grafo.get_string_arestas())
-    texto += "\n"
+    # texto += "Fluxo em cada aresta: \n"
+    # texto += str(grafo.get_string_arestas())
+    # texto += "\n"
 
     print(texto)
