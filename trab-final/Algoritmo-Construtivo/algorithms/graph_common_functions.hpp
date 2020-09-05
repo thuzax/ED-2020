@@ -28,4 +28,14 @@ double recalculate_district_balance(District* district, Graph* graph);
 
 int remove_best_candidate_id(District* district, Graph* graph);
 
+double calculate_ideal_balance(District** districts, int num_districts, 
+                                Graph* graph);
+
+vector<double> calculate_imbalances(District** districts, int num_districts, 
+                                    double ideal_balance);
+
+vector<double> calculate_diameters(District** districts, double num_districts, 
+                            Graph* graph);
+
+
 #endif

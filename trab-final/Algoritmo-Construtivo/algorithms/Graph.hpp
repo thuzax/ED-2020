@@ -46,6 +46,8 @@ class Graph {
         double get_coordenate_x(int id_vertex);
         double get_coordenate_y(int id_vertex);
         int get_num_vertices();
+        int get_district_by_vertex(int id_vertex);
+        Vertex** get_vertices();
         
         string get_string();
         string get_vertex_string(int id_vertex);

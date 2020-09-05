@@ -73,7 +73,8 @@ bool Graph::are_from_same_district(int id_v1, int id_v2) {
 vector<int> Graph::get_candidates(int id_vertex) {
     vector<int> candidates;
     vector<int> neighbors = this->adj_list->get_neighbors(id_vertex);
-    
+
+
     Vertex* vertex = this->vertices[id_vertex];
     for (int i = 0; i < neighbors.size(); i++) {
         Vertex* neighbor = this->vertices[neighbors[i]];
@@ -167,13 +168,22 @@ int Graph::get_num_vertices() {
     return this->num_vertices;
 }
 
+int Graph::get_district_by_vertex(int id_vertex) {
+    return this->vertices[id_vertex]->get_id_district();
+}
+
+// TODO: REMOVER ESTE LIXO
+Vertex** Graph::get_vertices() {
+    return this->vertices;
+}
+
 // Get the structures as strings
 string Graph::get_string() {
     string text = "";
     text += "---------------- Adj List -------------------\n";
     text += this->adj_list->get_string() + "\n";
-    text += "--------------- Adj Matri -------------------\n";
-    text += this->adj_matrix->get_string() + "\n";
+    // text += "--------------- Adj Matri -------------------\n";
+    // text += this->adj_matrix->get_string() + "\n";
 
     return text;
 
@@ -204,7 +214,7 @@ string Graph::get_vertices_string() {
 
 bool Graph::is_connected() {
     // discovered vertices
-    bool* discovered = new bool[this->num_vertices];
+    vector<bool> discovered(this->num_vertices, false);
     // number of subgraphs
     int count = 0;
 
@@ -243,7 +253,7 @@ bool Graph::is_connected() {
 
     }
 
-    delete[] discovered;
+    // delete[] discovered;
 
     // se count == 1, grafo é conexo, se count == 2, conjunto V == {}
     if (count < 2) {
@@ -256,10 +266,8 @@ bool Graph::is_connected() {
 
 bool Graph::is_connected(int id_district) {
     // discovered vertices
-    bool* discovered = new bool[this->num_vertices];
-    for (int i = 0; i < this->num_vertices; i++) {
-        discovered[i] = false;
-    }
+    vector<bool> discovered(this->num_vertices, false);
+    
     // number of subgraphs
     int count = 0;
     
@@ -311,7 +319,7 @@ bool Graph::is_connected(int id_district) {
 
     }
 
-    delete[] discovered;
+    // delete[] discovered;
 
     // se count == 1, grafo é conexo, se count == 2, conjunto V == {}
     if (count < 2) {

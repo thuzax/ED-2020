@@ -22,9 +22,9 @@ void District::decrease_num_vertices() {
 }
 
 
-// void District::add_vertex_to_district(int id_vertex) {
-//     border.push_back(id_vertex);
-// }
+void District::add_vertex_to_district(int id_vertex) {
+    vertices.push_back(id_vertex);
+}
 
 // Verify if a vertex is in the border district
 bool District::is_border_of_district(int id_vertex) {
@@ -103,6 +103,38 @@ void District::remove_from_candidates(int id_vertex) {
 }
 
 
+// TODO: adicionar atributos
+double District::calculate_imbalance(double ideal_balance) {
+    double variation = abs(this->get_balance() - ideal_balance)/ideal_balance;
+
+    return variation;
+}
+
+
+double District::calculate_diameter(Vertex** graph_vertices) {
+    int num_vertices = this->vertices.size();
+    double max_distance = 0;
+
+    for (int i = 0; i < num_vertices; i++) {
+        int id_vertex_1 = this->vertices[i];
+        double x_1 = graph_vertices[id_vertex_1]->get_coordinate_x();
+        double y_1 = graph_vertices[id_vertex_1]->get_coordinate_y();
+        
+
+        for (int j = i+1; j < num_vertices; j++) {
+            int id_vertex_2 = this->vertices[i];
+            double x_2 = graph_vertices[id_vertex_2]->get_coordinate_x();
+            double y_2 = graph_vertices[id_vertex_2]->get_coordinate_y();
+
+            double distance = euclidian_distance(x_1, x_2, y_1, y_2);
+
+            if (max_distance < distance) {
+                max_distance = distance;
+            }
+        }
+    }
+    return max_distance;
+}
 
 
 // Get the id of the district
@@ -143,7 +175,12 @@ string District::get_string() {
         text += to_string(this->candidates[i]) + " ";
     }
 
-    
+    text += "\n";
+
+    text += "vertices: ";
+    for (int i = 0; i < this->vertices.size(); i++) {
+        text += to_string(this->vertices[i]) + " ";
+    }
     
     return text;
 

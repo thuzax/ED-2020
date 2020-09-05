@@ -50,15 +50,19 @@ void assign_vertex_to_district(int id_vertex, District*
     
     graph->set_vertex_district_id(id_vertex, district->get_id());
     district->increase_num_vertices();
-    // district->add_vertex_to_district(id_vertex);
+    district->add_vertex_to_district(id_vertex);
+
+
 
     int num_neighbors_out = graph->get_num_neihgbors_out_of_district(id_vertex);
-    if (num_neighbors_out > 1) {
+    if (num_neighbors_out > 0) {
         district->add_to_border(id_vertex);
         graph->set_vertex_num_neighbors_out(id_vertex, num_neighbors_out);
         vector<int> candidates = graph->get_candidates(id_vertex);
         district->add_to_candidates(candidates);
+
     }
+
 
     graph->remove_from_neighbors_out_count(id_vertex);
 
@@ -86,4 +90,44 @@ int remove_best_candidate_id(District* district, Graph* graph) {
 
     district->remove_from_candidates(candidate_id);
     return candidate_id;
+}
+
+
+double calculate_ideal_balance(District** districts, 
+                                int num_districts, Graph* graph) {
+    
+    double ideal_balance = (
+        ((double) graph->get_num_vertices()) 
+        / ((double) num_districts)
+    );
+
+    return ideal_balance;
+}
+
+
+vector<double> calculate_imbalances(District** districts, int num_districts,
+                                        double ideal_balance) {
+
+
+    vector<double> imbalances;
+    for (int i = 0; i < num_districts; i++) {
+        double imbalance = districts[i]->calculate_imbalance(ideal_balance);
+        imbalances.push_back(imbalance);
+    }
+
+    return imbalances;
+}
+
+
+vector<double> calculate_diameters(District** districts, double num_districts, 
+                            Graph* graph) {
+    
+    vector<double> diameters(num_districts, 0);
+
+
+    for (int i = 0; i < num_districts; i++) {
+        diameters[i] = districts[i]->calculate_diameter(graph->get_vertices());
+    }
+
+    return diameters;
 }

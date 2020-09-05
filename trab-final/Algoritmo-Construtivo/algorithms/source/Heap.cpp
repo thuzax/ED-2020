@@ -106,7 +106,6 @@ void Heap::add(int id, double weight) {
         cout << "Heap cheia" << endl;
         return;
     }
-    
     NodeHeap* novo = new NodeHeap(id, weight);
     this->nodes[this->size] = novo;
     this->size++;

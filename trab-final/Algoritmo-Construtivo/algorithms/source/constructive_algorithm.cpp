@@ -10,8 +10,10 @@ void construct_districts(Graph* graph, District** districts,
         districts[i] = new District(i);
     }
 
+    // select random vertices as seeds
     vector<int> districts_seeds = select_districts_seeds(graph, num_districts);
 
+    // assign seeds to districts
     for (int i = 0; i < num_districts; i++) {
         assign_vertex_to_district(districts_seeds[i], districts[i], graph);
     }
@@ -26,8 +28,10 @@ void expand_districts(Graph* graph, District** districts, int num_districts) {
         heap.add(i, districts[i]->get_balance());
     }
 
+    bool achou_uma = false;
     while (not heap.heap_is_empty()) {
         int id_district = heap.remove();
+        
         District* district = districts[id_district];
 
         if (district->has_candidate()) {
